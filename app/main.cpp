@@ -1,9 +1,16 @@
-namespace syn {
-	__declspec(dllimport) void print();
-}
+#include <synthetic.h>
 
-int main() {
-	syn::print();
+class Sandbox : public syn::Application {
+	public:
+	Sandbox() {
 
-	return 0;
+	}
+
+	~Sandbox() {
+
+	}
+};
+
+syn::Application* syn::createApplication() {
+	return new Sandbox();
 }
