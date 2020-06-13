@@ -1,2 +1,8 @@
-build
 .vscode
+.vs
+*.sln
+bin
+bin-obj
+*.vcxproj
+*.vcxproj.user
+*.vcxproj.filters
