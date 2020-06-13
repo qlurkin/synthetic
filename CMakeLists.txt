@@ -8,11 +8,16 @@ add_library("${PROJECT_NAME}" SHARED
 	engine/entryPoint.h
 	engine/Application.h
 	engine/Application.cpp
+	engine/log.h
+	engine/Log.cpp
 )
 set_property(TARGET "${PROJECT_NAME}" PROPERTY CXX_STANDARD 17)
 target_compile_definitions("${PROJECT_NAME}"
 	PRIVATE SYN_PLATFORM_WINDOWS
 	PRIVATE SYN_BUILD_DLL
+)
+target_include_directories("${PROJECT_NAME}"
+	PRIVATE engine
 )
 
 add_executable(sandbox
