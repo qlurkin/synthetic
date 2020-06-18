@@ -1,6 +1,6 @@
-#include <synthetic.h>
+#include <Synthetic/synthetic.h>
 
-class Sandbox : public syn::Application {
+class Sandbox : public syn::Application, public syn::EventListener, public syn::KeyEventListener {
 	public:
 	Sandbox() {
 		SYN_WARN("Sandbox starting");
@@ -8,6 +8,16 @@ class Sandbox : public syn::Application {
 
 	~Sandbox() {
 
+	}
+
+	bool onEvent(syn::Event& event) {
+		SYN_TRACE("Event happens");
+		return false;
+	}
+
+	bool onKeyEvent(syn::KeyEvent& event) {
+		SYN_TRACE("KeyEvent happens");
+		return false;
 	}
 };
 
