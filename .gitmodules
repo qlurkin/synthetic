@@ -1,6 +1,6 @@
-[submodule "Synthetic/src/glfw"]
-	path = Synthetic/src/glfw
+[submodule "Synthetic/vendor/glfw"]
+	path = Synthetic/vendor/glfw
 	url = git@github.com:qlurkin/glfw.git
-[submodule "Synthetic/src/spdlog"]
-	path = Synthetic/src/spdlog
+[submodule "Synthetic/vendor/spdlog"]
+	path = Synthetic/vendor/spdlog
 	url = git@github.com:qlurkin/spdlog.git

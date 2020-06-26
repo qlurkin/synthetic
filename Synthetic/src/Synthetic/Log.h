@@ -1,7 +1,7 @@
 #pragma once
 
 #include "core.h"
-#include "spdlog/include/spdlog/spdlog.h"
+#include "spdlog/spdlog.h"
 
 namespace syn {
 	class SYN_API Log {

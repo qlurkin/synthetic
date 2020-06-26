@@ -27,6 +27,7 @@ project "Synthetic"
 
 	includedirs {
 		"%{prj.name}/src",
+		"%{prj.name}/vendor/spdlog/include"
 	}
 
 	filter "system:windows"
@@ -69,7 +70,8 @@ project "Sandbox"
 	}
 
 	includedirs {
-		"Synthetic/src"
+		"Synthetic/src",
+		"Synthetic/vendor/spdlog/include"
 	}
 
 	links {
