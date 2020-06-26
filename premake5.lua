@@ -13,9 +13,12 @@ project "Synthetic"
 	location "Synthetic"
 	kind "SharedLib"
 	language "C++"
-	
+
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-obj/" .. outputdir .. "/%{prj.name}")
+
+	pchheader "pch.h"
+	pchsource "Synthetic/src/pch.cpp"
 
 	files {
 		"%{prj.name}/src/**.h",
@@ -56,7 +59,7 @@ project "Sandbox"
 	location "Sandbox"
 	kind "ConsoleApp"
 	language "C++"
-	
+
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-obj/" .. outputdir .. "/%{prj.name}")
 
