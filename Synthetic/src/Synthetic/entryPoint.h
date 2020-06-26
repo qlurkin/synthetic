@@ -10,10 +10,7 @@ int main(int argc, char** argv) {
 	auto app = syn::createApplication();
 
 	syn::Event* event = new syn::Event();
-	syn::EventListener::dispatch(*event);
-
-	syn::KeyEvent* keyEvent = new syn::KeyEvent(42);
-	syn::KeyEventListener::dispatch(*keyEvent);
+	syn::Dispatcher::dispatch(*event);
 
 	app->run();
 	delete app;
