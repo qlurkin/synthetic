@@ -1,0 +1,3 @@
+[submodule "Synthetic/src/glfw"]
+	path = Synthetic/src/glfw
+	url = git@github.com:qlurkin/glfw.git
