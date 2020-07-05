@@ -9,6 +9,11 @@ workspace "Synthetic"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
+IncludeDir = {}
+IncludeDir["GLFW"] = "Synthetic/vendor/glfw/include"
+
+include "Synthetic/vendor/glfw"
+
 project "Synthetic"
 	location "Synthetic"
 	kind "SharedLib"
@@ -27,7 +32,13 @@ project "Synthetic"
 
 	includedirs {
 		"%{prj.name}/src",
-		"%{prj.name}/vendor/spdlog/include"
+		"%{prj.name}/vendor/spdlog/include",
+		"%{IncludeDir.GLFW}"
+	}
+
+	links {
+		"GLFW",
+		"opengl32.lib"
 	}
 
 	filter "system:windows"
