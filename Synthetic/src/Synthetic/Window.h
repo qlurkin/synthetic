@@ -5,6 +5,8 @@
 #include "Synthetic/core.h"
 #include "Events/Event.h"
 
+#include <GLFW/glfw3.h>
+
 namespace syn {
 
 	struct WindowProps
@@ -27,15 +29,15 @@ namespace syn {
 	public:
 		virtual ~Window() {}
 
-		virtual void onUpdate() = 0;
+		virtual void onUpdate();
 
-		virtual unsigned int getWidth() const = 0;
-		virtual unsigned int getHeight() const = 0;
+		virtual unsigned int getWidth() const;
+		virtual unsigned int getHeight() const;
 
 		// Window attributes
-		virtual void setEventCallback(const EventCallbackFn& callback) = 0;
-		virtual void setVSync(bool enabled) = 0;
-		virtual bool isVSync() const = 0;
+		virtual void setEventCallback(const EventCallbackFn& callback);
+		virtual void setVSync(bool enabled);
+		virtual bool isVSync() const;
 
 		static Window* create(const WindowProps& props = WindowProps());
 
@@ -52,5 +54,4 @@ namespace syn {
 
 		WindowData data;
 	};
-
 }

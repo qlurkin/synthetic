@@ -38,13 +38,13 @@ namespace syn {
 		glfwDestroyWindow(window);
 	}
 
-	void Window::OnUpdate()
+	void Window::onUpdate()
 	{
 		glfwPollEvents();
 		glfwSwapBuffers(window);
 	}
 
-	void Window::SetVSync(bool enabled)
+	void Window::setVSync(bool enabled)
 	{
 		if (enabled)
 			glfwSwapInterval(1);
@@ -54,7 +54,7 @@ namespace syn {
 		data.vsync = enabled;
 	}
 
-	bool Window::IsVSync() const
+	bool Window::isVSync() const
 	{
 		return data.vsync;
 	}
