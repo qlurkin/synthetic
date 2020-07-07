@@ -30,7 +30,7 @@ namespace syn {
 		window = glfwCreateWindow((int)props.width, (int)props.height, data.title.c_str(), nullptr, nullptr);
 		glfwMakeContextCurrent(window);
 		glfwSetWindowUserPointer(window, &data);
-		SetVSync(true);
+		setVSync(true);
 	}
 
 	Window::~Window()
