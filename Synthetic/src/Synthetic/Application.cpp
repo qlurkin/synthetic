@@ -4,15 +4,22 @@
 namespace syn {
 
 	Application::Application() {
-
+		window = std::unique_ptr<Window>(Window::create());
 	}
 
 	Application::~Application() {
 
 	}
 
+	bool Application::on(WindowCloseEvent& event) {
+		running = false;
+		return false;
+	}
+
 	void Application::run() {
-		while(true);
+		while(running) {
+			window->onUpdate();
+		}
 	}
 
 }

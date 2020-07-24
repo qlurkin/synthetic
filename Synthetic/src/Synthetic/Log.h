@@ -4,7 +4,7 @@
 #include "spdlog/spdlog.h"
 
 namespace syn {
-	class SYN_API Log {
+	class Log {
 		public:
 			static void init();
 

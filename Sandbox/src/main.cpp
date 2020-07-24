@@ -1,6 +1,6 @@
 #include <Synthetic/synthetic.h>
 
-class Sandbox : public syn::Application, public syn::Listener<syn::Event> {
+class Sandbox : public syn::Application, public syn::Listener<syn::WindowResizeEvent>, public syn::Listener<syn::KeyPressedEvent> {
 	public:
 	Sandbox() {
 		SYN_WARN("Sandbox starting");
@@ -10,8 +10,13 @@ class Sandbox : public syn::Application, public syn::Listener<syn::Event> {
 
 	}
 
-	bool on(syn::Event& event) {
-		SYN_TRACE("Event happens");
+	bool on(syn::WindowResizeEvent& event) {
+		SYN_TRACE(event.toString());
+		return false;
+	}
+
+	bool on(syn::KeyPressedEvent& event) {
+		SYN_TRACE(event.toString());
 		return false;
 	}
 };

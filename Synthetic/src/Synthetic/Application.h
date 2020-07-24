@@ -1,15 +1,22 @@
 #pragma once
 
 #include "core.h"
+#include "Window.h"
+#include "Events/Event.h"
 
 namespace syn {
 
-	class SYN_API Application {
+	class Application: public Listener<WindowCloseEvent>{
 		public:
-		Application();
-		virtual ~Application();
+			Application();
+			virtual ~Application();
 
-		void run();
+			bool on(WindowCloseEvent& event) override;
+
+			void run();
+		private:
+			std::unique_ptr<Window> window;
+			bool running = true;
 	};
 
 	Application* createApplication();

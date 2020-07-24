@@ -1,16 +1,12 @@
 #pragma once
 
-#include "pch.h"
-
 #include "Synthetic/core.h"
 #include "Events/Event.h"
 
-#include <GLFW/glfw3.h>
 
 namespace syn {
 
-	struct WindowProps
-	{
+	struct WindowProps {
 		std::string title;
 		unsigned int width;
 		unsigned int height;
@@ -18,40 +14,26 @@ namespace syn {
 		WindowProps(const std::string& title = "Synthetic Engine",
 			        unsigned int width = 1280,
 			        unsigned int height = 720)
-			: title(title), width(width), height(height)
-		{
-		}
+			: title(title), width(width), height(height) {}
 	};
 
 	// Interface representing a desktop system based Window
-	class SYN_API Window
-	{
-	public:
-		virtual ~Window() {}
+	class Window {
+		public:
+			using EventCallbackFn = std::function<void(Event&)>;
 
-		virtual void onUpdate();
+			virtual ~Window() {};
 
-		virtual unsigned int getWidth() const;
-		virtual unsigned int getHeight() const;
+			virtual void onUpdate() = 0;
 
-		// Window attributes
-		virtual void setEventCallback(const EventCallbackFn& callback);
-		virtual void setVSync(bool enabled);
-		virtual bool isVSync() const;
+			virtual unsigned int getWidth() const = 0;
+			virtual unsigned int getHeight() const = 0;
 
-		static Window* create(const WindowProps& props = WindowProps());
+			// Window attributes
+			virtual void setEventCallback(const EventCallbackFn& callback) = 0;
+			virtual void setVSync(bool enabled) = 0;
+			virtual bool isVSync() const = 0;
 
-	private:
-		GLFWwindow* window;
-
-		struct WindowData {
-			std::string title;
-			unsigned int width, height;
-			bool vsync;
-
-			EventCallbackFn eventCallback;
-		};
-
-		WindowData data;
+			static Window* create(const WindowProps& props = WindowProps());
 	};
 }
