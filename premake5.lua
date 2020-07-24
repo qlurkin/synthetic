@@ -16,8 +16,10 @@ include "Synthetic/vendor/glfw"
 
 project "Synthetic"
 	location "Synthetic"
-	kind "SharedLib"
+	kind "StaticLib"
 	language "C++"
+	cppdialect "C++17"
+	staticruntime "on"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-obj/" .. outputdir .. "/%{prj.name}")
@@ -28,6 +30,10 @@ project "Synthetic"
 	files {
 		"%{prj.name}/src/**.h",
 		"%{prj.name}/src/**.cpp"
+	}
+
+	defines {
+		"_CRT_SECURE_NO_WARNINGS"
 	}
 
 	includedirs {
@@ -42,8 +48,6 @@ project "Synthetic"
 	}
 
 	filter "system:windows"
-		cppdialect "C++17"
-		staticruntime "On"
 		systemversion "latest"
 
 		defines {
@@ -51,26 +55,27 @@ project "Synthetic"
 			"SYN_BUILD_DLL"
 		}
 
-		postbuildcommands {
-			("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")
-		}
-
 	filter "configurations:Debug"
-		defines "SYN_DEBUG"
-		symbols "On"
+		defines {
+			"SYN_DEBUG",
+			"SYN_ENABLE_ASSERTS"
+		}
+		symbols "on"
 
 	filter "configurations:Release"
 		defines "SYN_RELEASE"
-		optimize "On"
+		optimize "on"
 
 	filter "configurations:Dist"
 		defines "SYN_DIST"
-		symbols "On"
+		symbols "on"
 
 project "Sandbox"
 	location "Sandbox"
 	kind "ConsoleApp"
 	language "C++"
+	cppdialect "C++17"
+	staticruntime "on"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-obj/" .. outputdir .. "/%{prj.name}")
@@ -90,8 +95,6 @@ project "Sandbox"
 	}
 
 	filter "system:windows"
-		cppdialect "C++17"
-		staticruntime "On"
 		systemversion "latest"
 
 		defines {
@@ -99,15 +102,18 @@ project "Sandbox"
 		}
 
 	filter "configurations:Debug"
-		defines "SYN_DEBUG"
-		symbols "On"
+		defines {
+			"SYN_DEBUG",
+			"SYN_ENABLE_ASSERTS"
+		}
+		symbols "on"
 
 	filter "configurations:Release"
 		defines "SYN_RELEASE"
-		optimize "On"
+		optimize "on"
 
 	filter "configurations:Dist"
 		defines "SYN_DIST"
-		symbols "On"
+		symbols "on"
 
 
