@@ -3,9 +3,9 @@
 #include <typeinfo>
 #include <typeindex>
 
-#include "Event.h"
-
 namespace syn {
+	class Event;
+	
 	class BaseListener {
 		public:
 			virtual bool process(Event& event) = 0;

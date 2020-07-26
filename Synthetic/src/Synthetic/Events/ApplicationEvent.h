@@ -4,7 +4,21 @@
 
 namespace syn {
 
-	class WindowResizeEvent : public Event {
+	class ApplicationEvent: public Event {
+		public:
+			virtual bool dispatch() override {
+				bool res = Dispatcher::dispatch(*this);
+				if(!res) {
+					res = Event::dispatch();
+				}
+				return res;
+			}
+		
+		protected:
+			ApplicationEvent() {}
+	};
+
+	class WindowResizeEvent : public ApplicationEvent {
 		public:
 			WindowResizeEvent(unsigned int width, unsigned int height)
 				: width(width), height(height) {}
@@ -18,27 +32,83 @@ namespace syn {
 				return ss.str();
 			}
 
+			virtual bool dispatch() override {
+				bool res = Dispatcher::dispatch(*this);
+				if(!res) {
+					res = ApplicationEvent::dispatch();
+				}
+				return res;
+			}
+
 		private:
 			unsigned int width, height;
 	};
 
-	class WindowCloseEvent : public Event {
+	class WindowCloseEvent : public ApplicationEvent {
 		public:
 			WindowCloseEvent() = default;
+
+			std::string toString() const override {
+				return "WindowCloseEvent";
+			}
+
+			virtual bool dispatch() override {
+				bool res = Dispatcher::dispatch(*this);
+				if(!res) {
+					res = ApplicationEvent::dispatch();
+				}
+				return res;
+			}
 	};
 
-	class AppTickEvent : public Event {
+	class AppTickEvent : public ApplicationEvent {
 		public:
 			AppTickEvent() = default;
+
+			std::string toString() const override {
+				return "AppTickEvent";
+			}
+
+			virtual bool dispatch() override {
+				bool res = Dispatcher::dispatch(*this);
+				if(!res) {
+					res = ApplicationEvent::dispatch();
+				}
+				return res;
+			}
 	};
 
-	class AppUpdateEvent : public Event {
+	class AppUpdateEvent : public ApplicationEvent {
 		public:
 			AppUpdateEvent() = default;
+
+			std::string toString() const override {
+				return "AppUpdateEvent";
+			}
+
+			virtual bool dispatch() override {
+				bool res = Dispatcher::dispatch(*this);
+				if(!res) {
+					res = ApplicationEvent::dispatch();
+				}
+				return res;
+			}
 	};
 
-	class AppRenderEvent : public Event {
+	class AppRenderEvent : public ApplicationEvent {
 		public:
 			AppRenderEvent() = default;
+
+			std::string toString() const override {
+				return "AppRenderEvent";
+			}
+
+			virtual bool dispatch() override {
+				bool res = Dispatcher::dispatch(*this);
+				if(!res) {
+					res = ApplicationEvent::dispatch();
+				}
+				return res;
+			}
 	};
 }

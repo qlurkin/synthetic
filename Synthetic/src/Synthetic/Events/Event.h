@@ -3,6 +3,8 @@
 
 #include "Synthetic/core.h"
 
+#include "Listener.h"
+
 namespace syn {
 	class Event {
 		public:
@@ -13,6 +15,10 @@ namespace syn {
 
 			virtual std::string toString() const {
 				return "Default Event";
+			}
+
+			virtual bool dispatch() {
+				return Dispatcher::dispatch(*this);
 			}
 	};
 
@@ -25,5 +31,3 @@ namespace syn {
 #include "KeyEvent.h"
 #include "MouseEvent.h"
 #include "ApplicationEvent.h"
-
-#include "Listener.h"

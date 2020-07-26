@@ -41,13 +41,13 @@ namespace syn {
 			data.height = height;
 
 			WindowResizeEvent event = WindowResizeEvent(width, height);
-			Dispatcher::dispatch(event);
+			event.dispatch();
 		});
 
 		glfwSetWindowCloseCallback(window, [](GLFWwindow* window) {
 			WindowData& data = *(WindowData*) glfwGetWindowUserPointer(window);
 			WindowCloseEvent event;
-			Dispatcher::dispatch(event);
+			event.dispatch();
 		});
 
 		glfwSetKeyCallback(window, [](GLFWwindow* window, int key, int scancode, int action, int mods)  {
@@ -56,17 +56,17 @@ namespace syn {
 			switch(action) {
 				case GLFW_PRESS: {
 					KeyPressedEvent event(key, 0);
-					Dispatcher::dispatch(event);
+					event.dispatch();
 					break;
 				}
 				case GLFW_RELEASE: {
 					KeyReleasedEvent event(key);
-					Dispatcher::dispatch(event);
+					event.dispatch();
 					break;
 				}
 				case GLFW_REPEAT: {
 					KeyPressedEvent event(key, 1);
-					Dispatcher::dispatch(event);
+					event.dispatch();
 					break;
 				}
 			}
@@ -76,7 +76,7 @@ namespace syn {
 			WindowData& data = *(WindowData*) glfwGetWindowUserPointer(window);
 
 			KeyTypedEvent event(keycode);
-			Dispatcher::dispatch(event);
+			event.dispatch();
 		});
 
 		glfwSetMouseButtonCallback(window, [](GLFWwindow* window, int button, int action, int mods) {
@@ -85,12 +85,12 @@ namespace syn {
 			switch (action) {
 				case GLFW_PRESS: {
 					MouseButtonPressedEvent event(button);
-					Dispatcher::dispatch(event);
+					event.dispatch();
 					break;
 				}
 				case GLFW_RELEASE: {
 					MouseButtonReleasedEvent event(button);
-					Dispatcher::dispatch(event);
+					event.dispatch();
 					break;
 				}
 			}
@@ -100,14 +100,14 @@ namespace syn {
 			WindowData& data = *(WindowData*) glfwGetWindowUserPointer(window);
 
 			MouseScrolledEvent event((float)xOffset, (float)yOffset);
-			Dispatcher::dispatch(event);
+			event.dispatch();
 		});
 
 		glfwSetCursorPosCallback(window, [](GLFWwindow* window, double xPos, double yPos) {
 			WindowData& data = *(WindowData*) glfwGetWindowUserPointer(window);
 
 			MouseMovedEvent event((float)xPos, (float)yPos);
-			Dispatcher::dispatch(event);
+			event.dispatch();
 		});
 
 	}

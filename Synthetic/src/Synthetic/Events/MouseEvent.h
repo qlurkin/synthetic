@@ -4,7 +4,21 @@
 
 namespace syn {
 
-	class MouseMovedEvent : public Event {
+	class MouseEvent : public Event {
+		public:
+			virtual bool dispatch() override {
+				bool res = Dispatcher::dispatch(*this);
+				if(!res) {
+					res = Event::dispatch();
+				}
+				return res;
+			}
+
+		protected:
+			MouseEvent() {}
+	};
+
+	class MouseMovedEvent : public MouseEvent {
 		public:
 			MouseMovedEvent(float x, float y): mouseX(x), mouseY(y) {}
 
@@ -17,11 +31,19 @@ namespace syn {
 				return ss.str();
 			}
 
+			virtual bool dispatch() override {
+				bool res = Dispatcher::dispatch(*this);
+				if(!res) {
+					res = MouseEvent::dispatch();
+				}
+				return res;
+			}
+
 		private:
 			float mouseX, mouseY;
 	};
 
-	class MouseScrolledEvent : public Event {
+	class MouseScrolledEvent : public MouseEvent {
 		public:
 			MouseScrolledEvent(float xOffset, float yOffset): xOffset(xOffset), yOffset(yOffset) {}
 
@@ -34,13 +56,29 @@ namespace syn {
 				return ss.str();
 			}
 
+			virtual bool dispatch() override {
+				bool res = Dispatcher::dispatch(*this);
+				if(!res) {
+					res = MouseEvent::dispatch();
+				}
+				return res;
+			}
+
 		private:
 			float xOffset, yOffset;
 	};
 
-	class MouseButtonEvent : public Event {
+	class MouseButtonEvent : public MouseEvent {
 		public:
 			inline int getMouseButton() const { return button; }
+
+			virtual bool dispatch() override {
+				bool res = Dispatcher::dispatch(*this);
+				if(!res) {
+					res = MouseEvent::dispatch();
+				}
+				return res;
+			}
 		
 		protected:
 			MouseButtonEvent(int button)
@@ -60,18 +98,34 @@ namespace syn {
 				ss << "MouseButtonPressedEvent: " << getMouseButton();
 				return ss.str();
 			}
+
+			virtual bool dispatch() override {
+				bool res = Dispatcher::dispatch(*this);
+				if(!res) {
+					res = MouseButtonEvent::dispatch();
+				}
+				return res;
+			}
 	};
 
 	class MouseButtonReleasedEvent : public MouseButtonEvent {
-	public:
-		MouseButtonReleasedEvent(int button)
-			: MouseButtonEvent(button) {}
+		public:
+			MouseButtonReleasedEvent(int button)
+				: MouseButtonEvent(button) {}
 
-		std::string toString() const override {
-			std::stringstream ss;
-			ss << "MouseButtonReleasedEvent: " << getMouseButton();
-			return ss.str();
-		}
+			std::string toString() const override {
+				std::stringstream ss;
+				ss << "MouseButtonReleasedEvent: " << getMouseButton();
+				return ss.str();
+			}
+
+			virtual bool dispatch() override {
+					bool res = Dispatcher::dispatch(*this);
+					if(!res) {
+						res = MouseButtonEvent::dispatch();
+					}
+					return res;
+			}
 	};
 
 }
