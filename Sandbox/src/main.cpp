@@ -4,7 +4,6 @@ class Sandbox : public syn::Application, public syn::Listener<syn::Event> {
 	public:
 	Sandbox() {
 		SYN_WARN("Sandbox starting");
-
 	}
 
 	~Sandbox() {
