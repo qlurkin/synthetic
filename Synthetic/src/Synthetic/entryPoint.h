@@ -9,9 +9,6 @@ int main(int argc, char** argv) {
 	SYN_CORE_INFO("Starting Synthetic Engine");
 	auto app = syn::createApplication();
 
-	syn::Event* event = new syn::Event();
-	syn::Dispatcher::dispatch(*event);
-
 	app->run();
 	delete app;
 
