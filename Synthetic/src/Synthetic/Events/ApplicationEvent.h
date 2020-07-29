@@ -7,7 +7,7 @@ namespace syn {
 	class ApplicationEvent: public Event {
 		public:
 			virtual bool dispatch() override {
-				bool res = Dispatcher::dispatch(*this);
+				bool res = Listener<ApplicationEvent>::dispatch(*this);
 				if(!res) {
 					res = Event::dispatch();
 				}
@@ -33,7 +33,7 @@ namespace syn {
 			}
 
 			virtual bool dispatch() override {
-				bool res = Dispatcher::dispatch(*this);
+				bool res = Listener<WindowResizeEvent>::dispatch(*this);
 				if(!res) {
 					res = ApplicationEvent::dispatch();
 				}
@@ -53,7 +53,7 @@ namespace syn {
 			}
 
 			virtual bool dispatch() override {
-				bool res = Dispatcher::dispatch(*this);
+				bool res = Listener<WindowCloseEvent>::dispatch(*this);
 				if(!res) {
 					res = ApplicationEvent::dispatch();
 				}
@@ -70,7 +70,7 @@ namespace syn {
 			}
 
 			virtual bool dispatch() override {
-				bool res = Dispatcher::dispatch(*this);
+				bool res = Listener<AppTickEvent>::dispatch(*this);
 				if(!res) {
 					res = ApplicationEvent::dispatch();
 				}
@@ -87,7 +87,7 @@ namespace syn {
 			}
 
 			virtual bool dispatch() override {
-				bool res = Dispatcher::dispatch(*this);
+				bool res = Listener<AppUpdateEvent>::dispatch(*this);
 				if(!res) {
 					res = ApplicationEvent::dispatch();
 				}
@@ -104,7 +104,7 @@ namespace syn {
 			}
 
 			virtual bool dispatch() override {
-				bool res = Dispatcher::dispatch(*this);
+				bool res = Listener<AppRenderEvent>::dispatch(*this);
 				if(!res) {
 					res = ApplicationEvent::dispatch();
 				}

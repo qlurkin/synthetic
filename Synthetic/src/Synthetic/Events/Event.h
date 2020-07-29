@@ -18,7 +18,7 @@ namespace syn {
 			}
 
 			virtual bool dispatch() {
-				return Dispatcher::dispatch(*this);
+				return Listener<Event>::dispatch(*this);
 			}
 	};
 

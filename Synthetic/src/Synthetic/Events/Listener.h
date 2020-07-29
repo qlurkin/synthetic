@@ -5,53 +5,42 @@
 
 namespace syn {
 	class Event;
-	
-	class BaseListener {
-		public:
-			virtual bool process(Event& event) = 0;
-	};
+
+	class BaseListener {};
 
 	template <class T>
 	class Listener : public BaseListener {
-		friend class Dispatcher;
-
 		public:
 			Listener() {
-				Dispatcher::subscribe(std::type_index(typeid(T)), *this);
+				listeners.push_back(this);
 			}
 
 			virtual ~Listener() {
-				Dispatcher::unsubscribe(std::type_index(typeid(T)), *this);
-			}
-
-			bool process(Event& event) {
-				T& typedEvent = (T&) event;
-				return on(typedEvent);
+				listeners.erase(
+					std::remove(
+						listeners.begin(),
+						listeners.end(),
+						this
+					),
+					listeners.end()
+				);
 			}
 
 			virtual bool on(T& event) = 0;
-	};
-
-	class Dispatcher {
-		public:
-			Dispatcher();
-			~Dispatcher();
-
-			static void subscribe(std::type_index type, BaseListener& listener);
-			static void unsubscribe(std::type_index type, BaseListener& listener);
-
-			template <class T>
+		
 			static bool dispatch(T& event) {
-				std::vector<BaseListener*> L = listeners[std::type_index(typeid(T))];
-
-				for(BaseListener* listener : L) {
+				for(Listener<T>* listener: listeners) {
 					if(event.handled) break;
-					event.handled = listener->process(event);
+					event.handled = listener->on(event);
 				}
+
 				return event.handled;
 			}
 
 		private:
-			static std::unordered_map <std::type_index, std::vector<BaseListener*>> listeners;
+			static std::vector<Listener<T>*> listeners;
 	};
+
+	template<class T>
+	std::vector<Listener<T>*> Listener<T>::listeners;
 }

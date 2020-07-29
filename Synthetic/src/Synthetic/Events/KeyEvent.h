@@ -10,7 +10,7 @@ namespace syn {
 			}
 
 			virtual bool dispatch() override {
-				bool res = Dispatcher::dispatch(*this);
+				bool res = Listener<KeyEvent>::dispatch(*this);
 				if(!res) {
 					res = Event::dispatch();
 				}
@@ -39,7 +39,7 @@ namespace syn {
 			}
 
 			virtual bool dispatch() override {
-				bool res = Dispatcher::dispatch(*this);
+				bool res = Listener<KeyPressedEvent>::dispatch(*this);
 				if(!res) {
 					res = KeyEvent::dispatch();
 				}
@@ -61,7 +61,7 @@ namespace syn {
 			}
 
 			virtual bool dispatch() override {
-				bool res = Dispatcher::dispatch(*this);
+				bool res = Listener<KeyReleasedEvent>::dispatch(*this);
 				if(!res) {
 					res = KeyEvent::dispatch();
 				}
@@ -80,7 +80,7 @@ namespace syn {
 			}
 
 			virtual bool dispatch() override {
-				bool res = Dispatcher::dispatch(*this);
+				bool res = Listener<KeyTypedEvent>::dispatch(*this);
 				if(!res) {
 					res = KeyEvent::dispatch();
 				}

@@ -7,7 +7,7 @@ namespace syn {
 	class MouseEvent : public Event {
 		public:
 			virtual bool dispatch() override {
-				bool res = Dispatcher::dispatch(*this);
+				bool res = Listener<MouseEvent>::dispatch(*this);
 				if(!res) {
 					res = Event::dispatch();
 				}
@@ -32,7 +32,7 @@ namespace syn {
 			}
 
 			virtual bool dispatch() override {
-				bool res = Dispatcher::dispatch(*this);
+				bool res = Listener<MouseMovedEvent>::dispatch(*this);
 				if(!res) {
 					res = MouseEvent::dispatch();
 				}
@@ -57,7 +57,7 @@ namespace syn {
 			}
 
 			virtual bool dispatch() override {
-				bool res = Dispatcher::dispatch(*this);
+				bool res = Listener<MouseScrolledEvent>::dispatch(*this);
 				if(!res) {
 					res = MouseEvent::dispatch();
 				}
@@ -73,7 +73,7 @@ namespace syn {
 			inline int getMouseButton() const { return button; }
 
 			virtual bool dispatch() override {
-				bool res = Dispatcher::dispatch(*this);
+				bool res = Listener<MouseButtonEvent>::dispatch(*this);
 				if(!res) {
 					res = MouseEvent::dispatch();
 				}
@@ -100,7 +100,7 @@ namespace syn {
 			}
 
 			virtual bool dispatch() override {
-				bool res = Dispatcher::dispatch(*this);
+				bool res = Listener<MouseButtonPressedEvent>::dispatch(*this);
 				if(!res) {
 					res = MouseButtonEvent::dispatch();
 				}
@@ -120,7 +120,7 @@ namespace syn {
 			}
 
 			virtual bool dispatch() override {
-					bool res = Dispatcher::dispatch(*this);
+					bool res = Listener<MouseButtonReleasedEvent>::dispatch(*this);
 					if(!res) {
 						res = MouseButtonEvent::dispatch();
 					}
