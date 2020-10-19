@@ -5,15 +5,6 @@
 namespace syn {
 
 	class MouseEvent : public Event {
-		public:
-			virtual bool dispatch() override {
-				bool res = Listener<MouseEvent>::dispatch(*this);
-				if(!res) {
-					res = Event::dispatch();
-				}
-				return res;
-			}
-
 		protected:
 			MouseEvent() {}
 	};
@@ -29,14 +20,6 @@ namespace syn {
 				std::stringstream ss;
 				ss << "MouseMovedEvent: " << mouseX << ", " << mouseY;
 				return ss.str();
-			}
-
-			virtual bool dispatch() override {
-				bool res = Listener<MouseMovedEvent>::dispatch(*this);
-				if(!res) {
-					res = MouseEvent::dispatch();
-				}
-				return res;
 			}
 
 		private:
@@ -56,14 +39,6 @@ namespace syn {
 				return ss.str();
 			}
 
-			virtual bool dispatch() override {
-				bool res = Listener<MouseScrolledEvent>::dispatch(*this);
-				if(!res) {
-					res = MouseEvent::dispatch();
-				}
-				return res;
-			}
-
 		private:
 			float xOffset, yOffset;
 	};
@@ -71,14 +46,6 @@ namespace syn {
 	class MouseButtonEvent : public MouseEvent {
 		public:
 			inline int getMouseButton() const { return button; }
-
-			virtual bool dispatch() override {
-				bool res = Listener<MouseButtonEvent>::dispatch(*this);
-				if(!res) {
-					res = MouseEvent::dispatch();
-				}
-				return res;
-			}
 		
 		protected:
 			MouseButtonEvent(int button)
@@ -98,14 +65,6 @@ namespace syn {
 				ss << "MouseButtonPressedEvent: " << getMouseButton();
 				return ss.str();
 			}
-
-			virtual bool dispatch() override {
-				bool res = Listener<MouseButtonPressedEvent>::dispatch(*this);
-				if(!res) {
-					res = MouseButtonEvent::dispatch();
-				}
-				return res;
-			}
 	};
 
 	class MouseButtonReleasedEvent : public MouseButtonEvent {
@@ -117,14 +76,6 @@ namespace syn {
 				std::stringstream ss;
 				ss << "MouseButtonReleasedEvent: " << getMouseButton();
 				return ss.str();
-			}
-
-			virtual bool dispatch() override {
-					bool res = Listener<MouseButtonReleasedEvent>::dispatch(*this);
-					if(!res) {
-						res = MouseButtonEvent::dispatch();
-					}
-					return res;
 			}
 	};
 
