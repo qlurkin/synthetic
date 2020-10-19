@@ -8,14 +8,34 @@ namespace syn {
 
 	class BaseListener {};
 
-	template <class T>
-	class Listener : public BaseListener {
+	template<class ... N>
+	class Listener: public BaseListener {
+		public:
+			virtual bool process(Event& event) = 0;
+			
+			template<class T>
+			static bool dispatch(T& event) {
+				for(Listener<>* listener: allListeners[std::type_index(typeid(T))]) {
+					if(event.handled) break;
+					event.handled = listener->process(event);
+				}
+
+				return event.handled;
+			}
+		protected:
+			static std::unordered_map <std::type_index, std::vector<Listener<>*>> allListeners;
+	};
+
+	template<class T, class ... Rest>
+	class Listener<T, Rest...>: public Listener<Rest...> {
 		public:
 			Listener() {
-				listeners.push_back(this);
+				allListeners[std::type_index(typeid(T))].push_back(this);
 			}
 
 			virtual ~Listener() {
+				std::vector<Listener<>*> listeners = allListeners[std::type_index(typeid(T))];
+				
 				listeners.erase(
 					std::remove(
 						listeners.begin(),
@@ -26,21 +46,17 @@ namespace syn {
 				);
 			}
 
-			virtual bool on(T& event) = 0;
-		
-			static bool dispatch(T& event) {
-				for(Listener<T>* listener: listeners) {
-					if(event.handled) break;
-					event.handled = listener->on(event);
-				}
-
-				return event.handled;
+			virtual bool process(Event& event) {
+				T& typedEvent = (T&) event;
+				return on(typedEvent);
 			}
 
+			virtual bool on(T& event) = 0;
+
 		private:
-			static std::vector<Listener<T>*> listeners;
+			static std::vector<Listener<T, Rest...>*> listeners;
 	};
 
-	template<class T>
-	std::vector<Listener<T>*> Listener<T>::listeners;
+	template<class T, class ... Rest>
+	std::vector<Listener<T, Rest...>*> Listener<T, Rest...>::listeners;
 }

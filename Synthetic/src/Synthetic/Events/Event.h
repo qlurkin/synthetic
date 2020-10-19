@@ -9,16 +9,12 @@ namespace syn {
 	class Event {
 		public:
 			Event() {}
-			virtual ~Event() = default;
+			virtual ~Event() = default; 
 
 			bool handled = false;
 
 			virtual std::string toString() const {
 				return "Default Event";
-			}
-
-			virtual bool dispatch() {
-				return Listener<Event>::dispatch(*this);
 			}
 	};
 

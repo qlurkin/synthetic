@@ -8,14 +8,6 @@ namespace syn {
 			inline int getKeyCode() const {
 				return keyCode;
 			}
-
-			virtual bool dispatch() override {
-				bool res = Listener<KeyEvent>::dispatch(*this);
-				if(!res) {
-					res = Event::dispatch();
-				}
-				return res;
-			}
 		
 		protected:
 			KeyEvent(int keyCode): keyCode(keyCode) {}
@@ -37,14 +29,6 @@ namespace syn {
 				ss << "KeyPressedEvent: " << getKeyCode() << " (repeat=" << getRepeatCount() << ")";
 				return ss.str();
 			}
-
-			virtual bool dispatch() override {
-				bool res = Listener<KeyPressedEvent>::dispatch(*this);
-				if(!res) {
-					res = KeyEvent::dispatch();
-				}
-				return res;
-			}
 		
 		private:
 			int repeatCount;
@@ -59,14 +43,6 @@ namespace syn {
 				ss << "KeyReleasedEvent (key=" << getKeyCode() << ")";
 				return ss.str();
 			}
-
-			virtual bool dispatch() override {
-				bool res = Listener<KeyReleasedEvent>::dispatch(*this);
-				if(!res) {
-					res = KeyEvent::dispatch();
-				}
-				return res;
-			}
 	};
 
 	class KeyTypedEvent : public KeyEvent {
@@ -77,14 +53,6 @@ namespace syn {
 				std::stringstream ss;
 				ss << "KeyTypedEvent: " << getKeyCode();
 				return ss.str();
-			}
-
-			virtual bool dispatch() override {
-				bool res = Listener<KeyTypedEvent>::dispatch(*this);
-				if(!res) {
-					res = KeyEvent::dispatch();
-				}
-				return res;
 			}
 	};
 }

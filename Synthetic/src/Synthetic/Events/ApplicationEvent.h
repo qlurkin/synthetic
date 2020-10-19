@@ -5,15 +5,6 @@
 namespace syn {
 
 	class ApplicationEvent: public Event {
-		public:
-			virtual bool dispatch() override {
-				bool res = Listener<ApplicationEvent>::dispatch(*this);
-				if(!res) {
-					res = Event::dispatch();
-				}
-				return res;
-			}
-		
 		protected:
 			ApplicationEvent() {}
 	};
@@ -32,14 +23,6 @@ namespace syn {
 				return ss.str();
 			}
 
-			virtual bool dispatch() override {
-				bool res = Listener<WindowResizeEvent>::dispatch(*this);
-				if(!res) {
-					res = ApplicationEvent::dispatch();
-				}
-				return res;
-			}
-
 		private:
 			unsigned int width, height;
 	};
@@ -51,14 +34,6 @@ namespace syn {
 			std::string toString() const override {
 				return "WindowCloseEvent";
 			}
-
-			virtual bool dispatch() override {
-				bool res = Listener<WindowCloseEvent>::dispatch(*this);
-				if(!res) {
-					res = ApplicationEvent::dispatch();
-				}
-				return res;
-			}
 	};
 
 	class AppTickEvent : public ApplicationEvent {
@@ -67,14 +42,6 @@ namespace syn {
 
 			std::string toString() const override {
 				return "AppTickEvent";
-			}
-
-			virtual bool dispatch() override {
-				bool res = Listener<AppTickEvent>::dispatch(*this);
-				if(!res) {
-					res = ApplicationEvent::dispatch();
-				}
-				return res;
 			}
 	};
 
@@ -85,14 +52,6 @@ namespace syn {
 			std::string toString() const override {
 				return "AppUpdateEvent";
 			}
-
-			virtual bool dispatch() override {
-				bool res = Listener<AppUpdateEvent>::dispatch(*this);
-				if(!res) {
-					res = ApplicationEvent::dispatch();
-				}
-				return res;
-			}
 	};
 
 	class AppRenderEvent : public ApplicationEvent {
@@ -101,14 +60,6 @@ namespace syn {
 
 			std::string toString() const override {
 				return "AppRenderEvent";
-			}
-
-			virtual bool dispatch() override {
-				bool res = Listener<AppRenderEvent>::dispatch(*this);
-				if(!res) {
-					res = ApplicationEvent::dispatch();
-				}
-				return res;
 			}
 	};
 }
