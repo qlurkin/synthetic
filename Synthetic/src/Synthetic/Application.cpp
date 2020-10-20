@@ -4,12 +4,13 @@
 namespace syn {
 
 	Application::Application() {
-		window = std::unique_ptr<Window>(Window::create());
+		window = std::unique_ptr<Window>(Window::create(stack));
+		layer = new Layer("Core Application Layer");
+		stack.pushLayer(layer);
+		layer->add<WindowCloseEvent>(this);
 	}
 
-	Application::~Application() {
-
-	}
+	Application::~Application() {}
 
 	bool Application::on(WindowCloseEvent& event) {
 		running = false;

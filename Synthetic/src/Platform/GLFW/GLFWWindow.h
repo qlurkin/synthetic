@@ -7,7 +7,7 @@
 namespace syn {
 	class GLFWWindow : public Window {
 		public:
-			GLFWWindow(const WindowProps& props);
+			GLFWWindow(LayerStack& stack, const WindowProps& props);
 			virtual ~GLFWWindow();
 
 			void onUpdate() override;
@@ -15,7 +15,6 @@ namespace syn {
 			inline unsigned int getWidth() const override { return data.width; }
 			inline unsigned int getHeight() const override { return data.height; }
 
-			inline void setEventCallback(const EventCallbackFn& callback) override { data.eventCallback = callback; }
 			void setVSync(bool enabled) override;
 			bool isVSync() const override;
 
@@ -27,7 +26,7 @@ namespace syn {
 				unsigned int width, height;
 				bool vsync;
 
-				EventCallbackFn eventCallback;
+				LayerStack* stack;
 			};
 
 			WindowData data;

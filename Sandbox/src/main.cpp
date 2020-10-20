@@ -1,9 +1,13 @@
 #include <Synthetic/synthetic.h>
 
-class Sandbox : public syn::Application, public syn::Listener<syn::Event>, public syn::Listener<syn::KeyEvent> {
+class Sandbox : public syn::Application, public syn::Listener<syn::Event>, public syn::Listener<syn::KeyPressedEvent> {
 	public:
 	Sandbox() {
 		SYN_WARN("Sandbox starting");
+		syn::Layer* myLayer = new syn::Layer("myLayer");
+		getStack().pushLayer(myLayer);
+		myLayer->add<syn::Event>(this);
+		myLayer->add<syn::KeyPressedEvent>(this);
 	}
 
 	~Sandbox() {
@@ -15,7 +19,7 @@ class Sandbox : public syn::Application, public syn::Listener<syn::Event>, publi
 		return false;
 	}
 
-	bool on(syn::KeyEvent& event) {
+	bool on(syn::KeyPressedEvent& event) {
 		SYN_TRACE(event.toString());
 		return false;
 	}

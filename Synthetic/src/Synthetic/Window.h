@@ -20,8 +20,6 @@ namespace syn {
 	// Interface representing a desktop system based Window
 	class Window {
 		public:
-			using EventCallbackFn = std::function<void(Event&)>;
-
 			virtual ~Window() {};
 
 			virtual void onUpdate() = 0;
@@ -30,10 +28,9 @@ namespace syn {
 			virtual unsigned int getHeight() const = 0;
 
 			// Window attributes
-			virtual void setEventCallback(const EventCallbackFn& callback) = 0;
 			virtual void setVSync(bool enabled) = 0;
 			virtual bool isVSync() const = 0;
 
-			static Window* create(const WindowProps& props = WindowProps());
+			static Window* create(LayerStack& stack, const WindowProps& props = WindowProps());
 	};
 }

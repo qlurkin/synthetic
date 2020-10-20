@@ -14,9 +14,13 @@ namespace syn {
 			bool on(WindowCloseEvent& event) override;
 
 			void run();
+
+			inline LayerStack& getStack() { return stack; }
 		private:
 			std::unique_ptr<Window> window;
 			bool running = true;
+			LayerStack stack;
+			Layer* layer;
 	};
 
 	Application* createApplication();

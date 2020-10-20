@@ -7,16 +7,17 @@ namespace syn {
 
 	static bool GLFWInitialized = false;
 
-	Window* Window::create(const WindowProps& props)
+	Window* Window::create(LayerStack& stack, const WindowProps& props)
 	{
-		return new GLFWWindow(props);
+		return new GLFWWindow(stack, props);
 	}
 
-	GLFWWindow::GLFWWindow(const WindowProps& props)
+	GLFWWindow::GLFWWindow(LayerStack& stack, const WindowProps& props)
 	{
 		data.title = props.title;
 		data.width = props.width;
 		data.height = props.height;
+		data.stack = &stack;
 
 		SYN_CORE_INFO("Creating window {0} ({1}, {2})", props.title, props.width, props.height);
 
@@ -41,13 +42,13 @@ namespace syn {
 			data.height = height;
 
 			WindowResizeEvent event = WindowResizeEvent(width, height);
-			event.dispatch();
+			data.stack->dispatch(event);
 		});
 
 		glfwSetWindowCloseCallback(window, [](GLFWwindow* window) {
 			WindowData& data = *(WindowData*) glfwGetWindowUserPointer(window);
 			WindowCloseEvent event;
-			event.dispatch();
+			data.stack->dispatch(event);
 		});
 
 		glfwSetKeyCallback(window, [](GLFWwindow* window, int key, int scancode, int action, int mods)  {
@@ -56,17 +57,17 @@ namespace syn {
 			switch(action) {
 				case GLFW_PRESS: {
 					KeyPressedEvent event(key, 0);
-					event.dispatch();
+					data.stack->dispatch(event);
 					break;
 				}
 				case GLFW_RELEASE: {
 					KeyReleasedEvent event(key);
-					event.dispatch();
+					data.stack->dispatch(event);
 					break;
 				}
 				case GLFW_REPEAT: {
 					KeyPressedEvent event(key, 1);
-					event.dispatch();
+					data.stack->dispatch(event);
 					break;
 				}
 			}
@@ -76,7 +77,7 @@ namespace syn {
 			WindowData& data = *(WindowData*) glfwGetWindowUserPointer(window);
 
 			KeyTypedEvent event(keycode);
-			event.dispatch();
+			data.stack->dispatch(event);
 		});
 
 		glfwSetMouseButtonCallback(window, [](GLFWwindow* window, int button, int action, int mods) {
@@ -85,12 +86,12 @@ namespace syn {
 			switch (action) {
 				case GLFW_PRESS: {
 					MouseButtonPressedEvent event(button);
-					event.dispatch();
+					data.stack->dispatch(event);
 					break;
 				}
 				case GLFW_RELEASE: {
 					MouseButtonReleasedEvent event(button);
-					event.dispatch();
+					data.stack->dispatch(event);
 					break;
 				}
 			}
@@ -100,14 +101,14 @@ namespace syn {
 			WindowData& data = *(WindowData*) glfwGetWindowUserPointer(window);
 
 			MouseScrolledEvent event((float)xOffset, (float)yOffset);
-			event.dispatch();
+			data.stack->dispatch(event);
 		});
 
 		glfwSetCursorPosCallback(window, [](GLFWwindow* window, double xPos, double yPos) {
 			WindowData& data = *(WindowData*) glfwGetWindowUserPointer(window);
 
 			MouseMovedEvent event((float)xPos, (float)yPos);
-			event.dispatch();
+			data.stack->dispatch(event);
 		});
 
 	}

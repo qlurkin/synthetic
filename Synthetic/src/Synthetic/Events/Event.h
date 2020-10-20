@@ -4,6 +4,7 @@
 #include "Synthetic/core.h"
 
 #include "Listener.h"
+#include "LayerStack.h"
 
 namespace syn {
 	class Event {
